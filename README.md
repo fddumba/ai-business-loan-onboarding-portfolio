@@ -25,6 +25,29 @@ The process starts when a business loan application is submitted. The workflow t
    - Human evidence review
    - Manual investigation
 
+   ## Repository structure
+
+```text
+ai-business-loan-onboarding-portfolio/
+├── README.md
+├── data/
+│   └── test-cases.csv
+├── docs/
+│   ├── ai-guardrails.md
+│   ├── architecture.md
+│   ├── decision-rules.md
+│   └── test-summary.md
+├── forms/
+│   └── human-evidence-review-form.json
+├── outputs/
+│   └── sample-extraction-output-app-002.json
+├── prompts/
+│   └── document-extraction-agent-prompt.md
+├── screenshots/
+│   └── workflow and test evidence screenshots
+└── workflows/
+    └── ai-loan-onboarding-workflow.bpmn
+```
 ## Routing logic
 
 The gateway uses the variable `verificationRoute`.

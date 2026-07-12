@@ -1,0 +1,13 @@
+{
+  "application_id": "APP-002",
+  "document_readable": true,
+  "document_type": "Utility bill",
+  "company_name_extracted": "Green Valley Trading Ltd",
+  "address_extracted": "72 Industrial Way",
+  "document_date": "2026-06-18",
+  "company_name_match": false,
+  "address_match": false,
+  "missing_or_unclear_fields": [],
+  "extraction_summary": "The document is readable, but the extracted company name and address do not match the application and registry details.",
+  "workflow_signal": "MISMATCH_REQUIRES_REVIEW"
+}
