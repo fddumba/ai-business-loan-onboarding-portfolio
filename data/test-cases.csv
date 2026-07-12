@@ -1,0 +1,5 @@
+application_id,company_name,test_case,verification_route,expected_outcome,result
+APP-003,Bright Path Logistics Limited,Clean case,CLEAN_CASE,Proceed to final review,Passed
+APP-001,Stock Trace Limited,Weak or expired document,REQUEST_NEW_DOCUMENT,Waiting for new document,Passed
+APP-002,Green Valley Foods Limited,Mismatch case,HUMAN_REVIEW,Evidence sent for human review,Passed
+APP-004,Registry issue,Registry/manual investigation case,MANUAL_INVESTIGATION,Manual investigation required,Passed

@@ -1,0 +1,77 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.9.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "f51c130"
+  },
+  "schemaVersion": 19,
+  "id": "Form_02i8jhf",
+  "components": [
+    {
+      "label": "Application ID",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1gvwdvx",
+        "columns": null
+      },
+      "id": "Field_0oqj7j4",
+      "key": "applicationId"
+    },
+    {
+      "label": "Company Name",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0b2ga91",
+        "columns": null
+      },
+      "id": "Field_1lqdjur",
+      "key": "companyName"
+    },
+    {
+      "label": "AI extraction summary",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_11fnoty",
+        "columns": null
+      },
+      "id": "Field_04im1xw",
+      "key": "aiExtractionSummary"
+    },
+    {
+      "label": "Reviewer decision",
+      "values": [
+        {
+          "label": "Approve for final review",
+          "value": "APPROVE_FINAL_REVIEW"
+        },
+        {
+          "label": "Request new document",
+          "value": "REQUEST_NEW_DOCUMENT"
+        },
+        {
+          "label": "Escalate to manual investigation",
+          "value": "MANUAL_INVESTIGATION"
+        }
+      ],
+      "type": "radio",
+      "layout": {
+        "row": "Row_108rcau",
+        "columns": null
+      },
+      "id": "Field_0d6iq56",
+      "key": "reviewerDecision"
+    },
+    {
+      "label": "Reviewer comments",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1ka34zf",
+        "columns": null
+      },
+      "id": "Field_1sieqbd",
+      "key": "reviewerComments"
+    }
+  ],
+  "type": "default"
+}

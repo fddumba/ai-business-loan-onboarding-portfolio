@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="f51c130" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.10.0">
+  <bpmn:process id="Process_0rm242w" name="AI Business Loan Onboarding Portfolio" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Business loan application submitted">
+      <bpmn:outgoing>Flow_0slnccf</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_1v82o2m" name="Receive business loan application">
+      <bpmn:documentation>Captures the submitted business loan application details from the applicant, including company information, requested loan amount, loan purpose, and submitted proof document metadata.</bpmn:documentation>
+      <bpmn:incoming>Flow_0slnccf</bpmn:incoming>
+      <bpmn:outgoing>Flow_0cyczez</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0slnccf" name="Application submitted" sourceRef="StartEvent_1" targetRef="Activity_1v82o2m" />
+    <bpmn:task id="Activity_19byf3i" name="Create application record">
+      <bpmn:documentation>Creates a traceable internal case record for the submitted loan application. In a production version, this step would store the application in a database, CRM, or loan management system and return an application reference ID.</bpmn:documentation>
+      <bpmn:incoming>Flow_0cyczez</bpmn:incoming>
+      <bpmn:outgoing>Flow_0smbp53</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0cyczez" sourceRef="Activity_1v82o2m" targetRef="Activity_19byf3i" />
+    <bpmn:task id="Activity_0mxdw1y" name="Check company registry">
+      <bpmn:documentation>Checks the submitted company registration details against a mock company registry. The workflow verifies whether the company exists, is active, and whether the registered company name and address match the loan application.</bpmn:documentation>
+      <bpmn:incoming>Flow_0smbp53</bpmn:incoming>
+      <bpmn:outgoing>Flow_09t29jr</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0smbp53" sourceRef="Activity_19byf3i" targetRef="Activity_0mxdw1y" />
+    <bpmn:task id="Activity_15otp29" name="Analyze proof document with AI">
+      <bpmn:documentation>Uses an AI document-analysis step to extract structured facts from the submitted proof document, including document type, company name, business address, document date, readability, missing fields, and match signals against the application and registry data.</bpmn:documentation>
+      <bpmn:incoming>Flow_09t29jr</bpmn:incoming>
+      <bpmn:outgoing>Flow_13oamm7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_09t29jr" sourceRef="Activity_0mxdw1y" targetRef="Activity_15otp29" />
+    <bpmn:task id="Activity_1jetb1c" name="Set verification route">
+      <bpmn:documentation>Applies deterministic workflow rules to the registry result and AI extraction output. This step sets the verificationRoute variable to CLEAN_CASE, REQUEST_NEW_DOCUMENT, HUMAN_REVIEW, or MANUAL_INVESTIGATION.</bpmn:documentation>
+      <bpmn:incoming>Flow_13oamm7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vg9nth</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_13oamm7" sourceRef="Activity_15otp29" targetRef="Activity_1jetb1c" />
+    <bpmn:exclusiveGateway id="Gateway_1jh53s7" name="What is the verification outcome?">
+      <bpmn:incoming>Flow_0vg9nth</bpmn:incoming>
+      <bpmn:outgoing>Flow_18hph7x</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1glshap</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0d1463m</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1patmaq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0vg9nth" sourceRef="Activity_1jetb1c" targetRef="Gateway_1jh53s7" />
+    <bpmn:task id="Activity_1tx1m1m" name="Proceed to final review">
+      <bpmn:documentation>Moves the application to the normal final review stage after registry checks and document verification are clean. This path is used when the company is active, the document is readable, required fields are present, and application details match the evidence.</bpmn:documentation>
+      <bpmn:incoming>Flow_18hph7x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s2e5bv</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_18hph7x" sourceRef="Gateway_1jh53s7" targetRef="Activity_1tx1m1m">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= verificationRoute = "CLEAN_CASE"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="Activity_0gx9om0" name="Request new document">
+      <bpmn:documentation>Requests a replacement or additional document from the applicant when the submitted proof document is expired, weak, unreadable, missing required fields, or does not meet verification standards.</bpmn:documentation>
+      <bpmn:incoming>Flow_1glshap</bpmn:incoming>
+      <bpmn:outgoing>Flow_0pvham9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1glshap" name="Expired or weak document" sourceRef="Gateway_1jh53s7" targetRef="Activity_0gx9om0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=verificationRoute = "REQUEST_NEW_DOCUMENT"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0d1463m" name="Mismatch or unclear evidence" sourceRef="Gateway_1jh53s7" targetRef="Activity_0yovmsz">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=verificationRoute = "HUMAN_REVIEW"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="Activity_12wxo2f" name="Manual investigation">
+      <bpmn:documentation>Routes registry-related issues to manual investigation. This path is used when the company cannot be verified, the registration status is inactive, the registration number does not match, or the registry result raises a possible compliance concern.</bpmn:documentation>
+      <bpmn:incoming>Flow_1patmaq</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dk6u21</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1patmaq" name="Registry issue" sourceRef="Gateway_1jh53s7" targetRef="Activity_12wxo2f">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= verificationRoute = "MANUAL_INVESTIGATION"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_0iyyg51" name="Application moved to final review">
+      <bpmn:incoming>Flow_1s2e5bv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1s2e5bv" name="Clean case" sourceRef="Activity_1tx1m1m" targetRef="Event_0iyyg51" />
+    <bpmn:endEvent id="Event_01drvyb" name="Waiting for new document">
+      <bpmn:incoming>Flow_0pvham9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0pvham9" sourceRef="Activity_0gx9om0" targetRef="Event_01drvyb" />
+    <bpmn:endEvent id="Event_02c90nz" name="Evidence sent for human review">
+      <bpmn:incoming>Flow_0chz2w9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0chz2w9" sourceRef="Activity_0yovmsz" targetRef="Event_02c90nz" />
+    <bpmn:endEvent id="Event_0hyz09x" name="Manual investigation required">
+      <bpmn:incoming>Flow_1dk6u21</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1dk6u21" sourceRef="Activity_12wxo2f" targetRef="Event_0hyz09x" />
+    <bpmn:userTask id="Activity_0yovmsz" name="Human evidence review">
+      <bpmn:documentation>Routes uncertain or sensitive verification cases to a human reviewer. This path is used when the AI extraction result is unclear, confidence is low, company/address details do not fully match, or the evidence requires judgement before the application can continue.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="Form_02i8jhf" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0d1463m</bpmn:incoming>
+      <bpmn:outgoing>Flow_0chz2w9</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0rm242w">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="240" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="152" y="283" width="175" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v82o2m_di" bpmnElement="Activity_1v82o2m">
+        <dc:Bounds x="350" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19byf3i_di" bpmnElement="Activity_19byf3i">
+        <dc:Bounds x="510" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0mxdw1y_di" bpmnElement="Activity_0mxdw1y">
+        <dc:Bounds x="670" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15otp29_di" bpmnElement="Activity_15otp29">
+        <dc:Bounds x="830" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jetb1c_di" bpmnElement="Activity_1jetb1c">
+        <dc:Bounds x="990" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1jh53s7_di" bpmnElement="Gateway_1jh53s7" isMarkerVisible="true">
+        <dc:Bounds x="1155" y="233" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1099" y="283" width="163" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tx1m1m_di" bpmnElement="Activity_1tx1m1m">
+        <dc:Bounds x="1370" y="218" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gx9om0_di" bpmnElement="Activity_0gx9om0">
+        <dc:Bounds x="1370" y="330" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12wxo2f_di" bpmnElement="Activity_12wxo2f">
+        <dc:Bounds x="1370" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iyyg51_di" bpmnElement="Event_0iyyg51">
+        <dc:Bounds x="1552" y="240" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1489" y="283" width="161" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01drvyb_di" bpmnElement="Event_01drvyb">
+        <dc:Bounds x="1552" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1497" y="395" width="127" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_02c90nz_di" bpmnElement="Event_02c90nz">
+        <dc:Bounds x="1552" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1492" y="495" width="157" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0hyz09x_di" bpmnElement="Event_0hyz09x">
+        <dc:Bounds x="1552" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1498" y="145" width="144" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1r8d4go_di" bpmnElement="Activity_0yovmsz">
+        <dc:Bounds x="1370" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0slnccf_di" bpmnElement="Flow_0slnccf">
+        <di:waypoint x="198" y="258" />
+        <di:waypoint x="350" y="258" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="247" y="240" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cyczez_di" bpmnElement="Flow_0cyczez">
+        <di:waypoint x="450" y="258" />
+        <di:waypoint x="510" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0smbp53_di" bpmnElement="Flow_0smbp53">
+        <di:waypoint x="610" y="258" />
+        <di:waypoint x="670" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09t29jr_di" bpmnElement="Flow_09t29jr">
+        <di:waypoint x="770" y="258" />
+        <di:waypoint x="830" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13oamm7_di" bpmnElement="Flow_13oamm7">
+        <di:waypoint x="930" y="258" />
+        <di:waypoint x="990" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vg9nth_di" bpmnElement="Flow_0vg9nth">
+        <di:waypoint x="1090" y="258" />
+        <di:waypoint x="1155" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18hph7x_di" bpmnElement="Flow_18hph7x">
+        <di:waypoint x="1205" y="258" />
+        <di:waypoint x="1370" y="258" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1102" y="53" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1glshap_di" bpmnElement="Flow_1glshap">
+        <di:waypoint x="1180" y="283" />
+        <di:waypoint x="1180" y="370" />
+        <di:waypoint x="1370" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1210" y="353" width="131" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d1463m_di" bpmnElement="Flow_0d1463m">
+        <di:waypoint x="1180" y="283" />
+        <di:waypoint x="1180" y="470" />
+        <di:waypoint x="1370" y="470" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1202" y="454" width="147" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1patmaq_di" bpmnElement="Flow_1patmaq">
+        <di:waypoint x="1180" y="233" />
+        <di:waypoint x="1180" y="120" />
+        <di:waypoint x="1370" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1205" y="103" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s2e5bv_di" bpmnElement="Flow_1s2e5bv">
+        <di:waypoint x="1470" y="258" />
+        <di:waypoint x="1552" y="258" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1232" y="233" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pvham9_di" bpmnElement="Flow_0pvham9">
+        <di:waypoint x="1470" y="370" />
+        <di:waypoint x="1552" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dk6u21_di" bpmnElement="Flow_1dk6u21">
+        <di:waypoint x="1470" y="120" />
+        <di:waypoint x="1552" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0chz2w9_di" bpmnElement="Flow_0chz2w9">
+        <di:waypoint x="1470" y="470" />
+        <di:waypoint x="1552" y="470" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
