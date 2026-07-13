@@ -65,13 +65,17 @@ ai-business-loan-onboarding-portfolio/
 │   ├── ai-guardrails.md
 │   ├── architecture.md
 │   ├── decision-rules.md
+│   ├── interview-explanation.md
+│   ├── interview-questions-and-answers.md
+│   ├── langflow-camunda-integration.md
 │   └── test-summary.md
-        interview-explanation.md
-        interview-questions-and-answers.md
 ├── forms/
 │   └── human-evidence-review-form.json
 ├── outputs/
-│   └── sample-extraction-output-app-002.json
+│   ├── sample-extraction-output-app-001.json
+│   ├── sample-extraction-output-app-002.json
+│   ├── sample-extraction-output-app-003.json
+│   └── sample-extraction-output-app-004.json
 ├── prompts/
 │   └── document-extraction-agent-prompt.md
 ├── screenshots/

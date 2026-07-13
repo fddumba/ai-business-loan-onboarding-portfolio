@@ -1,0 +1,13 @@
+{
+  "application_id": "APP-003",
+  "document_readable": true,
+  "document_type": "Business registration certificate",
+  "company_name_extracted": "Bright Path Logistics Limited",
+  "address_extracted": "22 Airport Road",
+  "document_date": "2026-06-20",
+  "company_name_match": true,
+  "address_match": true,
+  "missing_or_unclear_fields": [],
+  "extraction_summary": "The document is readable and the extracted company name and address match the application and registry details.",
+  "workflow_signal": "EVIDENCE_MATCHED"
+}

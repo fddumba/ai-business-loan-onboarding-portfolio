@@ -1,0 +1,13 @@
+{
+  "application_id": "APP-001",
+  "document_readable": true,
+  "document_type": "Utility bill",
+  "company_name_extracted": "Stock Trace Limited",
+  "address_extracted": "14 Market Street",
+  "document_date": "2024-06-03",
+  "company_name_match": true,
+  "address_match": true,
+  "missing_or_unclear_fields": [],
+  "extraction_summary": "The document is readable and the extracted company name and address match the application details, but the document date is old and should be checked by deterministic workflow rules.",
+  "workflow_signal": "DOCUMENT_EXPIRED_OR_WEAK"
+}
