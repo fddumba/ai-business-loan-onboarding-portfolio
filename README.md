@@ -2,6 +2,35 @@
 
 This project demonstrates a controlled AI-assisted business loan onboarding workflow using Camunda as the workflow control system.
 
+The project shows how AI can support document verification while keeping final process control inside deterministic workflow rules and human review. It is designed as a production-minded portfolio project for enterprise AI integration, business process automation, and human-in-the-loop decision support.
+
+## What this project demonstrates
+
+This project demonstrates:
+
+- Business process modeling with Camunda
+- AI-assisted document verification design
+- Human-in-the-loop workflow control
+- Deterministic routing rules for sensitive decisions
+- Responsible AI guardrails
+- Structured JSON output design
+- Test evidence documentation
+- GitHub-ready project organization
+- Interview-ready technical explanation
+
+## Tech stack
+
+| Area | Tool or artifact |
+|---|---|
+| Workflow orchestration | Camunda |
+| Workflow model | BPMN 2.0 |
+| Human review | Camunda Tasklist form |
+| AI extraction design | Prompt-based document extraction agent |
+| Structured output | JSON |
+| Test data | CSV |
+| Documentation | Markdown |
+| Version control / portfolio | GitHub |
+
 ## Project goal
 
 The goal is to show how AI can support document verification without allowing AI to make uncontrolled final decisions.
