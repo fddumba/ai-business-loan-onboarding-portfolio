@@ -159,22 +159,39 @@ AI acts as the extraction and interpretation brain: it reads business evidence a
 
 Human reviewers handle uncertain, sensitive, or high-risk cases.
 
+## Version history
+
+| Version | Milestone | What was added |
+|---|---|---|
+| Version 1 | Camunda workflow evidence | Built the BPMN workflow, tested routing paths, captured screenshots, and uploaded the first GitHub version. |
+| Version 2 | AI documentation and sample output | Added AI guardrails, decision rules, test summary, extraction prompt, and sample AI output. |
+| Version 3 | Interview readiness | Added interview explanation and interview Q&A documentation. |
+| Version 4 | README polish | Improved the project overview, tech stack, and recruiter-facing explanation. |
+| Version 5 | LangFlow/Camunda integration design | Added integration design documentation and sample AI outputs for all four workflow routes. |
+| Version 6 | FastAPI mapping service prototype | Added a FastAPI service that validates AI extraction JSON and maps `workflow_signal` to Camunda `verificationRoute`. |
+
 ## Current version
 
-Current tested version: `v2-all-routing-paths-tested`
+Current version: `v6-fastapi-mapping-service-prototype`
 
-This version confirms that all four workflow outcomes were successfully tested in Camunda Operate.
+This version demonstrates a working FastAPI integration layer that converts structured AI extraction output into Camunda-ready workflow variables.
 
-The current build is a clean, deployable workflow-brain prototype.
+The current build proves the following flow:
+
+```text
+AI extraction JSON
+→ FastAPI validation
+→ workflow_signal mapping
+→ Camunda verificationRoute outputvv
 
 ## Future improvements
 
 Future versions can add:
 
-- LangFlow or Camunda native AI Agent integration
-- Real document extraction output
+- LangFlow live API connection
+- Camunda variable update integration
 - Database or CRM case creation
 - Applicant document upload form
-- Human review forms
 - Email or portal notifications
-- Full GitHub documentation and screenshots
+- Dockerized API service
+- Deployment to Azure
