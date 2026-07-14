@@ -59,6 +59,10 @@ The process starts when a business loan application is submitted. The workflow t
 ```text
 ai-business-loan-onboarding-portfolio/
 ├── README.md
+├── api-service/
+│   ├── main.py
+│   ├── README.md
+│   └── requirements.txt
 ├── data/
 │   └── test-cases.csv
 ├── docs/
@@ -79,7 +83,7 @@ ai-business-loan-onboarding-portfolio/
 ├── prompts/
 │   └── document-extraction-agent-prompt.md
 ├── screenshots/
-│   └── workflow and test evidence screenshots
+│   └── workflow, test, and FastAPI mapping evidence screenshots
 └── workflows/
     └── ai-loan-onboarding-workflow.bpmn
 ```
