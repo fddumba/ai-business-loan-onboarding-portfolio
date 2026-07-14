@@ -1,0 +1,16 @@
+{
+  "application_id": "APP-004",
+  "document_readable": true,
+  "document_type": "Business registration document",
+  "company_name_extracted": "Registry Issue Case",
+  "address_extracted": "",
+  "document_date": "2026-06-10",
+  "company_name_match": false,
+  "address_match": false,
+  "missing_or_unclear_fields": [
+    "registry_status",
+    "verified_business_address"
+  ],
+  "extraction_summary": "The submitted document is readable, but registry information is missing or unclear. The case requires manual investigation before the workflow can safely continue.",
+  "workflow_signal": "REGISTRY_REQUIRES_INVESTIGATION"
+}

@@ -1,0 +1,15 @@
+{
+  "application_id": "APP-999",
+  "document_readable": true,
+  "document_type": "Unknown document",
+  "company_name_extracted": "Unknown Company",
+  "address_extracted": "Unknown Address",
+  "document_date": "2026-06-30",
+  "company_name_match": false,
+  "address_match": false,
+  "missing_or_unclear_fields": [
+    "workflow_signal"
+  ],
+  "extraction_summary": "This request is used to test how the API handles an unsupported workflow signal.",
+  "workflow_signal": "UNKNOWN_SIGNAL"
+}
