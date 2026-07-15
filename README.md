@@ -169,21 +169,29 @@ Human reviewers handle uncertain, sensitive, or high-risk cases.
 | Version 4 | README polish | Improved the project overview, tech stack, and recruiter-facing explanation. |
 | Version 5 | LangFlow/Camunda integration design | Added integration design documentation and sample AI outputs for all four workflow routes. |
 | Version 6 | FastAPI mapping service prototype | Added a FastAPI service that validates AI extraction JSON and maps `workflow_signal` to Camunda `verificationRoute`. |
+| Version 7 | API service testing and polish | Added reusable sample request files, automated pytest coverage, API service documentation, updated requirements, and `.gitignore` for cleaner repository management. |
 
 ## Current version
 
-Current version: `v6-fastapi-mapping-service-prototype`
+Current version: `v7-api-service-testing-and-polish`
 
-This version demonstrates a working FastAPI integration layer that converts structured AI extraction output into Camunda-ready workflow variables.
+This version adds automated backend tests and reusable sample request files for the FastAPI integration service.
 
-The current build proves the following flow:
+The current build proves that the API service can reliably map AI extraction signals to Camunda workflow routes:
 
 ```text
 AI extraction JSON
 → FastAPI validation
 → workflow_signal mapping
-→ Camunda verificationRoute outputvv
+→ Camunda verificationRoute output
+→ automated pytest verification
+```
 
+Automated test result:
+
+```text
+5 passed
+```
 ## Future improvements
 
 Future versions can add:
