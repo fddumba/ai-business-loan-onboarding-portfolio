@@ -169,15 +169,16 @@ Human reviewers handle uncertain, sensitive, or high-risk cases.
 | Version 4 | README polish | Improved the project overview, tech stack, and recruiter-facing explanation. |
 | Version 5 | LangFlow/Camunda integration design | Added integration design documentation and sample AI outputs for all four workflow routes. |
 | Version 6 | FastAPI mapping service prototype | Added a FastAPI service that validates AI extraction JSON and maps `workflow_signal` to Camunda `verificationRoute`. |
-| Version 7 | API service testing and polish | Added reusable sample request files, automated pytest coverage, API service documentation, updated requirements, and `.gitignore` for cleaner repository management. |
+| Version 7 | API service testing and polish | Added reusable sample request files, automated pytest coverage, API service documentation, updated requirements, and `.gitignore` for cleaner repository management.
+| Version 8 | Docker support for FastAPI service | Added Dockerfile and `.dockerignore` for the FastAPI service so the API can be packaged and run in a clean, repeatable container environment. |
 
 ## Current version
 
-Current version: `v7-api-service-testing-and-polish`
+Current version: `v8-docker-support-for-fastapi-service`
 
-This version adds automated backend tests and reusable sample request files for the FastAPI integration service.
+This version adds Docker support for the FastAPI integration service.
 
-The current build proves that the API service can reliably map AI extraction signals to Camunda workflow routes:
+The current build now proves the following flow:
 
 ```text
 AI extraction JSON
@@ -185,13 +186,11 @@ AI extraction JSON
 → workflow_signal mapping
 → Camunda verificationRoute output
 → automated pytest verification
+→ Docker-ready API packaging
 ```
 
-Automated test result:
+The FastAPI service can now be run locally with Python or packaged as a Docker container.
 
-```text
-5 passed
-```
 ## Future improvements
 
 Future versions can add:
