@@ -67,6 +67,7 @@ ai-business-loan-onboarding-portfolio/
 │   └── test-cases.csv
 ├── docs/
 │   ├── ai-guardrails.md
+    ├── architecture-diagram.md
 │   ├── architecture.md
 │   ├── decision-rules.md
 │   ├── interview-explanation.md
@@ -171,26 +172,29 @@ Human reviewers handle uncertain, sensitive, or high-risk cases.
 | Version 6 | FastAPI mapping service prototype | Added a FastAPI service that validates AI extraction JSON and maps `workflow_signal` to Camunda `verificationRoute`. |
 | Version 7 | API service testing and polish | Added reusable sample request files, automated pytest coverage, API service documentation, updated requirements, and `.gitignore` for cleaner repository management.
 | Version 8 | Docker support for FastAPI service | Added Dockerfile and `.dockerignore` for the FastAPI service so the API can be packaged and run in a clean, repeatable container environment.
-| Version 9 | Camunda integration contract | Added a contract document explaining how FastAPI output maps into Camunda workflow variables and controls the BPMN gateway through `verificationRoute`. | |
+| Version 9 | Camunda integration contract | Added a contract document explaining how FastAPI output maps into Camunda workflow variables and controls the BPMN gateway through `verificationRoute`. |
+| Version 10 | Architecture diagram | Added a Mermaid architecture diagram showing how LangFlow, FastAPI, Camunda, workflow routing, and human review connect. |
 
 ## Current version
 
-Current version: `v9-camunda-integration-contract`
+## Current version
 
-This version adds a formal Camunda integration contract explaining how the FastAPI service output becomes Camunda-ready workflow variables.
+Current version: `v10-architecture-diagram`
 
-The current build now proves the following flow:
+This version adds a visual architecture diagram showing how the AI extraction layer, FastAPI integration service, and Camunda workflow connect.
+
+The current build now communicates the system visually:
 
 ```text
-LangFlow AI extraction output
+Applicant evidence
+→ LangFlow AI extraction
 → FastAPI validation and mapping
 → Camunda workflow variables
-→ verificationRoute
 → BPMN gateway routing
-→ human or automated workflow path
+→ final review, document request, human review, or manual investigation
 ```
 
-This strengthens the project by documenting the contract between AI extraction, API validation, and Camunda workflow control.
+This makes the project easier to understand for recruiters, technical reviewers, and interviewers.
 
 ## Future improvements
 
@@ -203,3 +207,4 @@ Future versions can add:
 - Email or portal notifications
 - Dockerized API service
 - Deployment to Azure
+  
