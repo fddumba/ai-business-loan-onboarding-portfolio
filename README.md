@@ -206,6 +206,6 @@ Future versions can add:
 - Database or CRM case creation
 - Applicant document upload form
 - Email or portal notifications
-- Dockerized API service
+- Docker Desktop testing of the API container
 - Deployment to Azure
   
