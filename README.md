@@ -170,26 +170,27 @@ Human reviewers handle uncertain, sensitive, or high-risk cases.
 | Version 5 | LangFlow/Camunda integration design | Added integration design documentation and sample AI outputs for all four workflow routes. |
 | Version 6 | FastAPI mapping service prototype | Added a FastAPI service that validates AI extraction JSON and maps `workflow_signal` to Camunda `verificationRoute`. |
 | Version 7 | API service testing and polish | Added reusable sample request files, automated pytest coverage, API service documentation, updated requirements, and `.gitignore` for cleaner repository management.
-| Version 8 | Docker support for FastAPI service | Added Dockerfile and `.dockerignore` for the FastAPI service so the API can be packaged and run in a clean, repeatable container environment. |
+| Version 8 | Docker support for FastAPI service | Added Dockerfile and `.dockerignore` for the FastAPI service so the API can be packaged and run in a clean, repeatable container environment.
+| Version 9 | Camunda integration contract | Added a contract document explaining how FastAPI output maps into Camunda workflow variables and controls the BPMN gateway through `verificationRoute`. | |
 
 ## Current version
 
-Current version: `v8-docker-support-for-fastapi-service`
+Current version: `v9-camunda-integration-contract`
 
-This version adds Docker support for the FastAPI integration service.
+This version adds a formal Camunda integration contract explaining how the FastAPI service output becomes Camunda-ready workflow variables.
 
 The current build now proves the following flow:
 
 ```text
-AI extraction JSON
-→ FastAPI validation
-→ workflow_signal mapping
-→ Camunda verificationRoute output
-→ automated pytest verification
-→ Docker-ready API packaging
+LangFlow AI extraction output
+→ FastAPI validation and mapping
+→ Camunda workflow variables
+→ verificationRoute
+→ BPMN gateway routing
+→ human or automated workflow path
 ```
 
-The FastAPI service can now be run locally with Python or packaged as a Docker container.
+This strengthens the project by documenting the contract between AI extraction, API validation, and Camunda workflow control.
 
 ## Future improvements
 
